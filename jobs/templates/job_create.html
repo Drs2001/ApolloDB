@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block extra_js %}
+<script>
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+	label {
+		font-weight: bold;
+		margin-top: 10px;
+	}
+	.formClass {
+		display: block;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+<form action = "" method = "post" style="padding-left: 20px; padding-top: 20px;">
+	{% csrf_token %}
+	{{form }}
+	<input class='button' type="submit" value="Submit">
+</form>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+    .header-section {
+        overflow: auto;
+        padding: 20px 0;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+</script>
+{% endblock %}
+
+{% block content %}
+<div style="width: 100%;">
+    <div class="header-section">
+        <h1 style="text-align: center;">Applications</h1>
+        <a style="float: right;" href="{% url 'job_create' %}" class="button">Add Application</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Position</th>
+                <th>Location</th>
+                <th>Email</th>
+                <th>Application Date</th>
+                <th>URL</th>
+                <th>Followed Up</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in applications %}
+            <tr>
+                <td>{{ application.company_name }}</td>
+                <td>{{ application.position }}</td>
+                <td>{{ application.location }}</td>
+                <td>{{ application.email }}</td>
+                <td>{{ application.application_date}}</td>
+                <td>{{ application.url }}</td>
+                <td>
+                    {% if application.followed_up %}
+                        ✓ Yes
+                    {% else %}
+                        ✗ No
+                    {% endif %} 
+                </td>
+                <td>
+                    <form method="post" action="{% url 'job_toggle' application.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-primary">Toggle</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" style="text-align: center;">No applications yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
