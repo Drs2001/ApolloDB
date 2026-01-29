@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>{% block title %}Spence Django{% endblock %}</title>
+    <style>
+        body {
+            min-height: 100vh; 
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            background-image: linear-gradient(135deg, #B4EDD2, #C4B2BC);
+        }
+        .button {
+            background-color: #000000;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            font-weight: bold;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+            border-radius: 4px;
+        }
+        .button:hover {
+            background-color: #757780;
+            text-decoration: none;
+            color: white;
+        }
+        .navbar {
+            /* background-color: black; */
+            background-image: linear-gradient(#191b91, #3c1278);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; 
+        }
+        .navbar a {
+            color: white;
+            font-weight: bold;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+            padding: 10px;
+            border-radius: 4px;
+            width: 100%;
+            text-align: center;
+        }
+        .navbar a:hover {
+            background-color: #757780;
+            color: white;
+        }
+    </style>
+    {% block extra_css %}
+    {% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <a class="nav-link" href="{% url 'homepage' %}">Home</a>
+        <a class="nav-link" style="margin-top: auto;" href="{% url 'logout' %}">Logout</a>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    {% block extra_js %}
+    {% endblock %}
+</body>
+</html>
