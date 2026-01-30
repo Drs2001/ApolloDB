@@ -3,9 +3,18 @@
 {% block extra_css %}
 <style>
     .header-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         overflow: auto;
         padding: 20px 0;
         margin-bottom: 20px;
+    }
+    .search-input {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 250px; /* adjust as needed */
     }
 </style>
 {% endblock %}
@@ -18,8 +27,20 @@
 {% block content %}
 <div style="width: 100%;">
     <div class="header-section">
-        <h1 style="text-align: center;">Applications</h1>
-        <a style="float: right;" href="{% url 'job_create' %}" class="button">Add Application</a>
+        <h1 style="">Applications</h1>
+        <form method="post" action="{% url 'jobpage' %}" class="header-actions">
+            {% csrf_token %}
+            <input type="text" name="search_query" placeholder="Search applications..." class="search-input">
+            <button class="button" type="submit">Search</button>
+        </form>
+        <form method="post" action="{% url 'jobpage' %}" id="filterForm">
+            {% csrf_token %}
+            <label>
+                <input type="checkbox" name="show_followed_up" value="true" {% if only_not_followed_up %}checked{% endif %}  onchange="this.form.submit()">
+                Show only not followed up
+            </label>
+        </form>
+        <a style="" href="{% url 'job_create' %}" class="button">Add Application</a>
     </div>
     <table class="table table-striped">
         <thead>

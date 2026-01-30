@@ -6,12 +6,22 @@ from .models import Application
 @login_required
 def jobpage_view(request):
     applications = []
+    search_query = ''
+    followed_up = False
 
-    applicaiton_query = Application.objects.filter(user=request.user)
+    if request.method == "POST":
+        if request.POST.get('search_query', ''):
+            search_query = request.POST.get('search_query', '')
+        if request.POST.get('show_followed_up', ''):
+            followed_up = request.POST.get('show_followed_up', '')
+
+    applicaiton_query = Application.objects.filter(user=request.user).filter(company_name__icontains=search_query)
+    if followed_up:
+        applicaiton_query = applicaiton_query.filter(followed_up=False)
+        followed_up = True
     applicaiton_query = applicaiton_query.order_by('-application_date')
 
     for application in applicaiton_query:
-        print(application.followed_up)
         applications.append({
             'company_name': application.company_name,
             'url': application.url,
@@ -24,7 +34,8 @@ def jobpage_view(request):
         })
 
     return render(request, 'job.html', {
-        'applications': applications
+        'applications': applications,
+        'only_not_followed_up': followed_up
     })
 
 @login_required
